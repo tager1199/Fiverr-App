@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import './ListManager.dart';
-import './Notif.dart';
+import './WP.dart';
+import './CardManager.dart';
+import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 
 void main() async {
   runApp(MyApp());
@@ -35,8 +37,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const SecondaryColor = const Color(0xFF635C5A);
 
   static List<Widget> _widgetOptions = <Widget>[
-    ListManager(),
-    ListManager(),
+    PostManager(),
+    CouponManager(),
     ListManager(),
     ListManager(),
     ListManager(),
@@ -86,7 +88,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
         ],
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -146,10 +148,6 @@ class Choice {
 }
 
 const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Car', icon: Icons.directions_car),
-  const Choice(title: 'Bicycle', icon: Icons.directions_bike),
-  const Choice(title: 'Boat', icon: Icons.directions_boat),
-  const Choice(title: 'Bus', icon: Icons.directions_bus),
-  const Choice(title: 'Train', icon: Icons.directions_railway),
-  const Choice(title: 'Walk', icon: Icons.directions_walk),
+  const Choice(title: 'Account', icon: Icons.account_circle),
+  const Choice(title: 'Settings', icon: Icons.settings),
 ];
