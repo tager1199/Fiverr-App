@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import './ListManager.dart';
 import './WordPress.dart';
-import './CardManager.dart';
-import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 
 void main() async {
   runApp(MyApp());
@@ -41,7 +38,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     PostManager(427),
     PostManager(22),
     PostManager(84),
-    PostManager(244),
   ];
 
   void _onItemTapped(int index) {
@@ -130,15 +126,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               onPressed: () {
                 setState(() {
                   _selectedIndex = 3;
-                });
-              },
-            ),
-            FlatButton(
-              textColor: Colors.white,
-              child: Text("Back to School"),
-              onPressed: () {
-                setState(() {
-                  _selectedIndex = 4;
                 });
               },
             ),

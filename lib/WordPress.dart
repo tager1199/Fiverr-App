@@ -44,7 +44,6 @@ class _PostManagerState extends State<PostManager> {
       body: ListView.builder(
         itemCount: posts == null ? 0 : posts.length,
         itemBuilder: (BuildContext context, int index) {
-          print(posts[index]["categories"]);
           if(posts[index]["categories"].contains(widget.category)){
             return Column(
 
