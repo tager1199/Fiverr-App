@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import './ListManager.dart';
-import './WP.dart';
+import './WordPress.dart';
 import './CardManager.dart';
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: PrimaryColor,
       ),
-      title: 'Planner',
+      title: 'phillycouponmom',
       home: MyStatefulWidget(),
     );
   }
@@ -37,11 +37,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const SecondaryColor = const Color(0xFF635C5A);
 
   static List<Widget> _widgetOptions = <Widget>[
-    PostManager(),
-    CouponManager(),
-    ListManager(),
-    ListManager(),
-    ListManager(),
+    PostManager(449),
+    PostManager(427),
+    PostManager(22),
+    PostManager(84),
+    PostManager(244),
   ];
 
   void _onItemTapped(int index) {
@@ -67,7 +67,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             PopupMenuButton<Choice>(
           onSelected: _select,
           itemBuilder: (BuildContext context) {
-            return choices.skip(2).map((Choice choice) {
+            return choices.map((Choice choice) {
               return PopupMenuItem<Choice>(
                 value: choice,
                 child: Text(choice.title),
@@ -75,7 +75,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             }).toList();
           },
         ),
-        title: const Text('Coupon App'),
+        title: const Text('Philly Coupon Mom'),
         centerTitle: true,
         actions: <Widget>[
           // Text
@@ -108,7 +108,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
             FlatButton(
               textColor: Colors.white,
-              child: Text("Stores"),
+              child: Text("Hacks"),
               onPressed: () {
                 setState(() {
                   _selectedIndex = 1;
@@ -117,7 +117,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
             FlatButton(
               textColor: Colors.white,
-              child: Text("Deals"),
+              child: Text("Walmart"),
               onPressed: () {
                 setState(() {
                   _selectedIndex = 2;
@@ -126,10 +126,19 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
             FlatButton(
               textColor: Colors.white,
-              child: Text("Circular Ads"),
+              child: Text("\$1 or Less"),
               onPressed: () {
                 setState(() {
                   _selectedIndex = 3;
+                });
+              },
+            ),
+            FlatButton(
+              textColor: Colors.white,
+              child: Text("Back to School"),
+              onPressed: () {
+                setState(() {
+                  _selectedIndex = 4;
                 });
               },
             ),

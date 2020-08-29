@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './Card.dart';
 
 class CouponManager extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     return _CouponManagerState();
