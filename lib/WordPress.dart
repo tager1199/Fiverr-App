@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 //import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:easy_web_view/easy_web_view.dart';
+
+//import 'package:url_launcher/url_launcher.dart';
+//import 'package:flutter_html_view/flutter_html_view.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class PostManager extends StatefulWidget {
-
   final int category;
 
   PostManager(this.category);
@@ -19,13 +21,14 @@ class PostManager extends StatefulWidget {
 }
 
 class _PostManagerState extends State<PostManager> {
-
   final String apiUrl = "https://www.phillycouponmom.com/wp-json/wp/v2/";
   List posts;
 
   Future<String> getPosts() async {
     var res = await http.get(Uri.encodeFull(apiUrl + "posts?_embed"),
-        headers: {"Accept": "application/json"});
+        headers: {"Accept": "application/json"}
+        );
+
 
     // fill our posts list with results and update state
     setState(() {
@@ -35,9 +38,7 @@ class _PostManagerState extends State<PostManager> {
     return "Success!";
   }
 
-
   @override
-
   void initState() {
     super.initState();
     this.getPosts();
@@ -46,17 +47,15 @@ class _PostManagerState extends State<PostManager> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: (MediaQuery
-          .of(context)
-          .size
-          .width),
+      width: (MediaQuery.of(context).size.width),
       height: 10000.0,
       child: Scaffold(
-        body: ListView.builder(
-          itemCount: posts == null ? 0 : posts.length,
-          itemBuilder: (BuildContext context, int index) {
-            if (posts[index]["categories"].contains(widget.category)) {
-              return GestureDetector(child: Card(
+          body: ListView.builder(
+        itemCount: posts == null ? 0 : posts.length,
+        itemBuilder: (BuildContext context, int index) {
+          if (posts[index]["categories"].contains(widget.category)) {
+            return GestureDetector(
+              child: Card(
                 margin: EdgeInsets.all(5.0),
                 color: Color(0xFFA6ACAF), // card color
                 child: Column(
@@ -64,8 +63,14 @@ class _PostManagerState extends State<PostManager> {
                     Card(
                       child: Column(
                         children: <Widget>[
-                          new Image.network(
-                              posts[index]["_embedded"]["wp:featuredmedia"][0]["source_url"]),
+                          new CachedNetworkImage(
+                            imageUrl: posts[index]["_embedded"]
+                                ["wp:featuredmedia"][0]["source_url"],
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
                           new Padding(
                             padding: EdgeInsets.all(10.0),
                             child: new ListTile(
@@ -73,7 +78,6 @@ class _PostManagerState extends State<PostManager> {
                                   padding: EdgeInsets.symmetric(vertical: 10.0),
                                   child: new Text(
                                       posts[index]["title"]["rendered"])),
-
                             ),
                           )
                         ],
@@ -82,26 +86,23 @@ class _PostManagerState extends State<PostManager> {
                   ],
                 ),
               ),
-                onTap:(){
-                  EasyWebView(
-                    src: posts[index]["guid"]["rendered"],
-                    isHtml: false, // Use Html syntax
-                    isMarkdown: false, // Use markdown syntax
-                    // width: 100,
-                    // height: 100,
-                  );
+              onTap: () {
+                WebView(
+                  initialUrl: posts[index]["guid"]["rendered"],
+                  javascriptMode: JavascriptMode.unrestricted,
+                );
                 //launch(posts[index]["guid"]["rendered"]);
-                },
-              );
-            }
-            else {
-              return Column();
-            }
-          },
-        ),
-      ),
+              },
+            );
+          } else {
+            return Column(
+              children: [
+                Text("Sorry but we do not have any coupons in that category")
+              ],
+            );
+          }
+        },
+      )),
     );
   }
-
 }
-

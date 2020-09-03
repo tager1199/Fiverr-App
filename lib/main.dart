@@ -46,31 +46,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     });
   }
 
-  Choice _selectedChoice = choices[0]; // The app's "state".
-  void _select(Choice choice) {
-    // Causes the app to rebuild with the new _selectedChoice.
-    setState(() {
-      _selectedChoice = choice;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: PrimaryColor,
-        leading: // overflow menu
-            PopupMenuButton<Choice>(
-          onSelected: _select,
-          itemBuilder: (BuildContext context) {
-            return choices.map((Choice choice) {
-              return PopupMenuItem<Choice>(
-                value: choice,
-                child: Text(choice.title),
-              );
-            }).toList();
+        leading:
+        IconButton(
+          icon: Icon(Icons.star),
+          onPressed: (){
+            //_select(choices[1]);
           },
         ),
+        backgroundColor: PrimaryColor,
         title: const Text('Philly Coupon Mom'),
         centerTitle: true,
         actions: <Widget>[
@@ -136,14 +123,3 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
 }
 
-class Choice {
-  const Choice({this.title, this.icon});
-
-  final String title;
-  final IconData icon;
-}
-
-const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Account', icon: Icons.account_circle),
-  const Choice(title: 'Settings', icon: Icons.settings),
-];
