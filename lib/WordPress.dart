@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:easy_web_view/easy_web_view.dart';
 
 class PostManager extends StatefulWidget {
 
@@ -35,6 +35,7 @@ class _PostManagerState extends State<PostManager> {
     return "Success!";
   }
 
+
   @override
 
   void initState() {
@@ -49,7 +50,7 @@ class _PostManagerState extends State<PostManager> {
           .of(context)
           .size
           .width),
-      height: 1000.0,
+      height: 10000.0,
       child: Scaffold(
         body: ListView.builder(
           itemCount: posts == null ? 0 : posts.length,
@@ -82,7 +83,14 @@ class _PostManagerState extends State<PostManager> {
                 ),
               ),
                 onTap:(){
-                launch(posts[index]["guid"]["rendered"]);
+                  EasyWebView(
+                    src: posts[index]["guid"]["rendered"],
+                    isHtml: false, // Use Html syntax
+                    isMarkdown: false, // Use markdown syntax
+                    // width: 100,
+                    // height: 100,
+                  );
+                //launch(posts[index]["guid"]["rendered"]);
                 },
               );
             }
